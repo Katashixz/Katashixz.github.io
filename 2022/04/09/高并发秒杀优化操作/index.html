@@ -6,15 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives: 2021 | Katashixz的博客</title>
+  <title>高并发秒杀优化操作介绍 | Katashixz的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Katashixz的博客">
-<meta property="og:url" content="http://example.com/archives/2021/index.html">
+  <meta name="description" content="高并发秒杀优化操作1. 减少数据库的操作 判断是否重复抢购这个操作可以优化，大致思路是把用户订单放到Redis里，键中加上用户，抢购时判断是否已存在信息。来代替查询数据库  具体操作 123&#x2F;&#x2F;生成订单时redisTemplate.opsForValue().set(&quot;order:&quot; + user.getId() + &quot;:&quot; + goods.getId(),">
+<meta property="og:type" content="article">
+<meta property="og:title" content="高并发秒杀优化操作介绍">
+<meta property="og:url" content="http://example.com/2022/04/09/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A7%92%E6%9D%80%E4%BC%98%E5%8C%96%E6%93%8D%E4%BD%9C/index.html">
 <meta property="og:site_name" content="Katashixz的博客">
+<meta property="og:description" content="高并发秒杀优化操作1. 减少数据库的操作 判断是否重复抢购这个操作可以优化，大致思路是把用户订单放到Redis里，键中加上用户，抢购时判断是否已存在信息。来代替查询数据库  具体操作 123&#x2F;&#x2F;生成订单时redisTemplate.opsForValue().set(&quot;order:&quot; + user.getId() + &quot;:&quot; + goods.getId(),">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A7%92%E6%9D%80%E4%BC%98%E5%8C%96%E6%93%8D%E4%BD%9C/image-20220405232633646.png">
+<meta property="og:image" content="http://example.com/img/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A7%92%E6%9D%80%E4%BC%98%E5%8C%96%E6%93%8D%E4%BD%9C/image-20220405233014417.png">
+<meta property="og:image" content="http://example.com/img/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A7%92%E6%9D%80%E4%BC%98%E5%8C%96%E6%93%8D%E4%BD%9C/image-20220405234320336.png">
+<meta property="og:image" content="http://example.com/img/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A7%92%E6%9D%80%E4%BC%98%E5%8C%96%E6%93%8D%E4%BD%9C/image-20220405234413655.png">
+<meta property="og:image" content="http://example.com/img/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A7%92%E6%9D%80%E4%BC%98%E5%8C%96%E6%93%8D%E4%BD%9C/image-20220405234718836.png">
+<meta property="article:published_time" content="2022-04-09T12:10:44.000Z">
+<meta property="article:modified_time" content="2022-06-16T07:11:58.881Z">
 <meta property="article:author" content="Katashi">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A7%92%E6%9D%80%E4%BC%98%E5%8C%96%E6%93%8D%E4%BD%9C/image-20220405232633646.png">
   
     <link rel="alternative" href="/atom.xml" title="Katashixz的博客" type="application/atom+xml">
   
@@ -136,76 +146,261 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-高并发秒杀优化操作" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2021" class="archive-year">2021</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/08/17/%E5%85%B3%E4%BA%8E%E6%8A%A5%E9%94%99Process-terminated%E7%9A%84%E8%A7%A3%E5%86%B3/" class="archive-article-date">
-  	<time datetime="2021-08-17T07:39:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-17</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/08/17/%E5%85%B3%E4%BA%8E%E6%8A%A5%E9%94%99Process-terminated%E7%9A%84%E8%A7%A3%E5%86%B3/">关于报错Process terminated的解决</a>
+    <h1 class="article-title" itemprop="name">
+      高并发秒杀优化操作介绍
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/08/16/%E6%AD%A3%E5%BC%8F%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87/" class="archive-article-date">
-  	<time datetime="2021-08-16T05:24:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-16</time>
+        
+        <a href="/2022/04/09/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A7%92%E6%9D%80%E4%BC%98%E5%8C%96%E6%93%8D%E4%BD%9C/" class="archive-article-date">
+  	<time datetime="2022-04-09T12:10:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-04-09</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/08/16/%E6%AD%A3%E5%BC%8F%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87/">正式的第一篇</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="高并发秒杀优化操作"><a href="#高并发秒杀优化操作" class="headerlink" title="高并发秒杀优化操作"></a>高并发秒杀优化操作</h1><h2 id="1-减少数据库的操作"><a href="#1-减少数据库的操作" class="headerlink" title="1. 减少数据库的操作"></a>1. 减少数据库的操作</h2><ol>
+<li><p>判断是否重复抢购这个操作可以优化，大致思路是把用户订单放到Redis里，键中加上用户，抢购时判断是否已存在信息。来代替查询数据库</p>
+<ol>
+<li><p>具体操作</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//生成订单时</span></span><br><span class="line">redisTemplate.opsForValue().set(<span class="string">&quot;order:&quot;</span> + user.getId() + <span class="string">&quot;:&quot;</span> + goods.getId(),</span><br><span class="line">                               JsonUtil.object2JsonStr(seckillOrder));</span><br></pre></td></tr></table></figure>
 
-        <div class="article-info info-on-right">
-          
-          
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//秒杀操作前</span></span><br><span class="line">SeckillOrder seckillOrder = (SeckillOrder) redisTemplate.opsForValue().get(<span class="string">&quot;order:&quot;</span> +user.getId()</span><br><span class="line">                                                                          + <span class="string">&quot;:&quot;</span> + goodsId);</span><br><span class="line"><span class="comment">//如果取出的信息不为空代表已经购买过此产品，不能再参与(限购为1情况下)</span></span><br><span class="line"><span class="keyword">if</span>(seckillOrder != <span class="keyword">null</span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> RespBean.error(RespBeanEnum.REPEATE_ERROR);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p>库存可以在初始化时候就加入到Redis里，秒杀的时候直接减去Redis里的库存，然后再使用RabbitMQ消息队列分别进行处理</p>
+<ol>
+<li><p>具体操作</p>
+<ul>
+<li>配置初始化库存</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//接口调用implements InitializingBean</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/seckill&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SecKillController</span> <span class="keyword">implements</span> <span class="title">InitializingBean</span></span>&#123;</span><br><span class="line">    <span class="comment">//实现这个接口的方法</span></span><br><span class="line">    <span class="comment">//系统初始化，把商品库存数量加载到Redis</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterPropertiesSet</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        <span class="comment">//从数据库找出有秒杀商品</span></span><br><span class="line">        List&lt;GoodsVo&gt; list = goodsService.findGoodsVo();</span><br><span class="line">        <span class="keyword">if</span>(CollectionUtils.isEmpty(list))&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//把每个秒杀产品的库存信息加载到Redis里</span></span><br><span class="line">        list.forEach(goodsVo -&gt;</span><br><span class="line">                    redisTemplate.opsForValue().set(<span class="string">&quot;seckillGoods:&quot;</span> + goodsVo.getId(),</span><br><span class="line">                                                   goodsVo.getStockCount()));</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<ul>
+<li>秒杀接口里配置库存减少操作</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/doSeckill&quot;,method = RequestMethod.POST)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> RespBean <span class="title">doSeckill</span><span class="params">(User user,Long goodsId)</span></span>&#123;</span><br><span class="line">    <span class="comment">//判断用户是否存在</span></span><br><span class="line">    <span class="comment">//一堆代码判断是否重复抢购</span></span><br><span class="line">    <span class="comment">//判断是否重复抢购后</span></span><br><span class="line">    ValueOperations valueOperations = redisTemplate.opsForValue();</span><br><span class="line">    <span class="comment">//预减库存,每次执行自动-1</span></span><br><span class="line">    Long stock = valueOperations.decrement(<span class="string">&quot;seckillGoods:&quot;</span> + goodsId);</span><br><span class="line">    <span class="comment">//如果库存减了之后小于零就执行这个情况，个人感觉这里可能会有问题</span></span><br><span class="line">    <span class="keyword">if</span> (stock &lt; <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="comment">//每次执行自动加一，防止库存出现-1的情况</span></span><br><span class="line">        valueOperations.increment(<span class="string">&quot;seckillGoods:&quot;</span> + goodsId);</span><br><span class="line">		<span class="keyword">return</span> RespBean.error(RespBeanEnum.EMPTY_STOCK);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//生成订单，以后会替换成SeckillMessage</span></span><br><span class="line">    Order order = orderService.seckill(user,goods);</span><br><span class="line">    <span class="keyword">return</span> RespBean.success(Order);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p>把秒杀请求封装成一个对象发送给RabbitMQ。把操作异步掉，用消息队列达到流量削锋的目的。</p>
+<ol>
+<li><p>具体操作</p>
+<ul>
+<li><p>创建封装对象SeckillMessage</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SeckillMessage</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> User user;</span><br><span class="line">    <span class="keyword">private</span> Long goodId;</span><br><span class="line">    <span class="comment">//getter、setter、构造器省略</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>选择使用RabbitMQ的Topic模式，进行config配置</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RabbitMQTopicConfig</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String QUEUE = <span class="string">&quot;seckillQueue&quot;</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String EXCHANGE = <span class="string">&quot;seckillExchange&quot;</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Queue <span class="title">queue</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Queue(QUEUE);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> TopicExchange <span class="title">topicExchange</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> TopicExchange(EXCHANGE);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Binding <span class="title">binding</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> BindingBuilder.bind(queue()).to(topicExchange()).with(<span class="string">&quot;seckill.#&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>MQSender配置</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="comment">//lombok的注解</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MQSender</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> RabbitTemplate rabbitTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sendSeckillMessage</span><span class="params">(String message)</span></span>&#123;</span><br><span class="line">        log.info(<span class="string">&quot;发送消息：&quot;</span>  + message);</span><br><span class="line">        rabbitTemplate.converAndSend(<span class="string">&quot;seckillExchange&quot;</span>, <span class="string">&quot;seckill.message&quot;</span>, message);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置完后回到Controller接口修改，加入MQSender</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> MQSender mqSender;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/doSeckill&quot;,method = RequestMethod.POST)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> RespBean <span class="title">doSeckill</span><span class="params">(User user,Long goodsId)</span></span>&#123;</span><br><span class="line">    <span class="comment">//判断用户是否存在</span></span><br><span class="line">    <span class="comment">//一堆代码判断是否重复抢购</span></span><br><span class="line">    <span class="comment">//判断是否重复抢购后</span></span><br><span class="line">    ValueOperations valueOperations = redisTemplate.opsForValue();</span><br><span class="line">    <span class="comment">//预减库存,每次执行自动-1</span></span><br><span class="line">    Long stock = valueOperations.decrement(<span class="string">&quot;seckillGoods:&quot;</span> + goodsId);</span><br><span class="line">    <span class="comment">//如果库存减了之后小于零就执行这个情况，个人感觉这里可能会有问题</span></span><br><span class="line">    <span class="keyword">if</span> (stock &lt; <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="comment">//每次执行自动加一，防止库存出现-1的情况</span></span><br><span class="line">        valueOperations.increment(<span class="string">&quot;seckillGoods:&quot;</span> + goodsId);</span><br><span class="line">		<span class="keyword">return</span> RespBean.error(RespBeanEnum.EMPTY_STOCK);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//替换处</span></span><br><span class="line">    SeckillMessage seckillMessage = <span class="keyword">new</span> SeckillMessage(user, goodsId);</span><br><span class="line">    <span class="comment">//使用RabbitMQ实现异步，把订单生成放入另一部分操作，这样能快速返回信息。这里是JsonUtil是自己编写的工具类，在下文</span></span><br><span class="line">    mqSender.sendSeckillMessage(JsonUtil.object2JsonStr(seckillMessage));</span><br><span class="line">    <span class="comment">//前端收到0，要作出&quot;排队中&quot;的响应</span></span><br><span class="line">    <span class="keyword">return</span> RespBean.success(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>MQReceiver，接受sender消息，异步掉操作</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="comment">//lombok的注解</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MQReceiver</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> RabbitTemplate rabbitTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> IGoodsService goodsService;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> RedisTemplate redisTemplate;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> OrderService orderService;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@RabbitListener(queues = &quot;seckillQueue&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">receive</span><span class="params">(String message)</span></span>&#123;</span><br><span class="line">    	<span class="comment">//先打印下看看能不能拿到正确的message</span></span><br><span class="line">        log.info(<span class="string">&quot;接受到的消息：&quot;</span> + message);</span><br><span class="line">        <span class="comment">//转换消息从JSON到对象</span></span><br><span class="line">        SeckillMessage seckillMessage = JsonUtil.jsonStr2Object(message, SeckillMessage.class);</span><br><span class="line">        <span class="comment">//获取goodId和用户</span></span><br><span class="line">        User user = seckillMessage.getUser();</span><br><span class="line">        Long goodsId = seckillMessage.getGoodId();</span><br><span class="line">        <span class="comment">//获取商品信息</span></span><br><span class="line">        GoodsVo goodsVo = goodsService.findGoodsVoByGoodsId(goodsId);</span><br><span class="line">        <span class="comment">//判断库存</span></span><br><span class="line">        <span class="keyword">if</span>(goodsVo.getStockCount() &lt; <span class="number">1</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//判断是否重复抢购</span></span><br><span class="line">        SeckillOrder seckillOrder = </span><br><span class="line">            (SeckillOrder) redisTemplate.opsForValue().get(<span class="string">&quot;order:&quot;</span> + user.getId() + <span class="string">&quot;:&quot;</span></span><br><span class="line">                                                          + goodsId);</span><br><span class="line">        <span class="keyword">if</span>(seckillOrder != <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//下单操作</span></span><br><span class="line">        orderService.seckill(user,goodsVo);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li></li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>内存标记，减少库存卖光之后对redis的访问</p>
+<ol>
+<li><p>具体操作</p>
+<ul>
+<li><p>在Controller里设置个内存标记</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Long对应不同的商品id</span></span><br><span class="line"><span class="keyword">private</span> Map&lt;Long,Boolean&gt; EmptyStockMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>之前的初始化方法重写，加入内存标记初始化</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterPropertiesSet</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        <span class="comment">//从数据库找出有秒杀商品</span></span><br><span class="line">        List&lt;GoodsVo&gt; list = goodsService.findGoodsVo();</span><br><span class="line">        <span class="keyword">if</span>(CollectionUtils.isEmpty(list))&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//把每个秒杀产品的库存信息加载到Redis里</span></span><br><span class="line">        list.forEach(goodsVo -&gt; &#123;</span><br><span class="line">            redisTemplate.opsForValue().set(<span class="string">&quot;seckillGoods:&quot;</span> + goodsVo.getId(),</span><br><span class="line">                                                   goodsVo.getStockCount()));</span><br><span class="line">            EmptyStockMap.put(goodsVo.getId(),<span class="keyword">false</span>);</span><br><span class="line">        &#125;</span><br><span class="line">                    </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接口里具体实现内存标记判断</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> MQSender mqSender;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/doSeckill&quot;,method = RequestMethod.POST)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> RespBean <span class="title">doSeckill</span><span class="params">(User user,Long goodsId)</span></span>&#123;</span><br><span class="line">    <span class="comment">//判断用户是否存在</span></span><br><span class="line">    <span class="comment">//一堆代码判断是否重复抢购</span></span><br><span class="line">    <span class="comment">//判断是否重复抢购后</span></span><br><span class="line">    ValueOperations valueOperations = redisTemplate.opsForValue();</span><br><span class="line">    <span class="comment">//预减库存,每次执行自动-1</span></span><br><span class="line">    Long stock = valueOperations.decrement(<span class="string">&quot;seckillGoods:&quot;</span> + goodsId);</span><br><span class="line">    <span class="comment">//内存标记判断，减少Redis访问</span></span><br><span class="line">    <span class="keyword">if</span>(EmptyStockMap.get(goodsId))&#123;</span><br><span class="line">        <span class="keyword">return</span> RespBean.error(RespBeanEnum.EMPTY_STOCK);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//如果库存减了之后小于零就执行这个情况，个人感觉这里可能会有问题</span></span><br><span class="line">    <span class="keyword">if</span> (stock &lt; <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="comment">//修改处，标记内存</span></span><br><span class="line">        EmptyStockMap.put(goodsId,<span class="keyword">true</span>);</span><br><span class="line">        <span class="comment">//每次执行自动加一，防止库存出现-1的情况</span></span><br><span class="line">        valueOperations.increment(<span class="string">&quot;seckillGoods:&quot;</span> + goodsId);</span><br><span class="line">		<span class="keyword">return</span> RespBean.error(RespBeanEnum.EMPTY_STOCK);</span><br><span class="line">    &#125;</span><br><span class="line">    SeckillMessage seckillMessage = <span class="keyword">new</span> SeckillMessage(user, goodsId);</span><br><span class="line">    <span class="comment">//这里是JsonUtil是自己编写的工具类，在下文</span></span><br><span class="line">    mqSender.sendSeckillMessage(JsonUtil.object2JsonStr(seckillMessage));</span><br><span class="line">    <span class="comment">//前端收到0，要作出&quot;排队中&quot;的响应</span></span><br><span class="line">    <span class="keyword">return</span> RespBean.success(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li></li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>轮询判断是否秒杀成功，因为之前只返回了一个排队中</p>
+<ol>
+<li><p>具体操作</p>
+<ul>
+<li><p>在秒杀的Controller里再新建一个接口，专门获取秒杀结果，返回一个orderId代表成功，返回-1代表秒杀失败，返回0代表排队中</p>
+</li>
+<li><p>Controller</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/result&quot;,method = RequestMethod.POST)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> RespBean <span class="title">getResult</span><span class="params">(User user, Long goodsId)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(user == <span class="keyword">null</span>)&#123;</span><br><span class="line">		<span class="keyword">return</span> RespBean.error(RespBeanEnum.SESSION_ERROR);</span><br><span class="line">    &#125;</span><br><span class="line">    Long orderId = seckillOrderService.getResult(user,goodsId);</span><br><span class="line">    <span class="keyword">return</span> RespBean.success(orderId);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Service层创建接口并实现(相关自动加载注解就不写了)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Long <span class="title">getResult</span><span class="params">(User user, Long goodsId)</span></span>&#123;</span><br><span class="line">    SeckillOrder seckillOrder = seckillOrderMapper.selectOne(<span class="keyword">new</span> QueryWrapper&lt;SeckillOrder)().eq(<span class="string">&quot;user_id&quot;</span>, user.getId()).eq(<span class="string">&quot;goods_id&quot;</span>,goodsId);</span><br><span class="line">    <span class="comment">//如果订单表里有这个用户下了这个产品的订单，就说明秒杀成功，返回订单编号。</span></span><br><span class="line">    <span class="keyword">if</span>(seckillOrder != <span class="keyword">null</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> seckillOrder.getOrderId();</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(redisTemplate.hasKey(<span class="string">&quot;isStockEmpty:&quot;</span> + goodsId))&#123;</span><br><span class="line">        <span class="comment">//如果Redis里这个产品的isStockEmpty标记为是，就返回库存为空的标记</span></span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1L</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="comment">//如果没有这个订单，就代表秒杀失败</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">0L</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在生成订单的时候要加上判断库存为空</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Transactional</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Order <span class="title">seckill</span><span class="params">(User user,GoodsVo goods)</span></span>&#123;</span><br><span class="line">	ValueOperations valueOperations = redisTemplate.opsForValue();</span><br><span class="line">	<span class="comment">//秒杀商品表减库存操作...</span></span><br><span class="line">    </span><br><span class="line">	<span class="comment">//判断是否还有库存</span></span><br><span class="line">    <span class="keyword">if</span>(seckillGoods.getStockCount() &lt; <span class="number">1</span>)&#123;</span><br><span class="line">        valueOperations.set(<span class="string">&quot;isStockEmpty:&quot;</span> + goods.getId(), <span class="string">&quot;0&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接下来就是前端写轮询发送请求判断了，若返回-1就是秒杀失败不用轮询，若返回0排队中就要写设置间隔几秒发送请求到getResult接口。</p>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>脚本优化(再说)</p>
+<ul>
+<li><p>经历以上操作，超卖问题是解决了，但是存在一个问题，单个用户多次秒杀会使得redis库存多次减少并且超出限购。还会让redis库存扣完但是数据库没有，所以需要优化。**(这个方法好像没有用，自己预想是用用户标记)**</p>
+</li>
+<li><p>lua脚本实现分布式锁，具体作用看视频</p>
+</li>
+<li><p><img src="/./img/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A7%92%E6%9D%80%E4%BC%98%E5%8C%96%E6%93%8D%E4%BD%9C/image-20220405232633646.png" alt="image-20220405232633646"></p>
+</li>
+<li><p>RedisConfig调用</p>
+</li>
+<li><p><img src="/./img/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A7%92%E6%9D%80%E4%BC%98%E5%8C%96%E6%93%8D%E4%BD%9C/image-20220405233014417.png" alt="image-20220405233014417"></p>
+</li>
+<li><p>在配置一个stock.lua判断库存</p>
+</li>
+<li><p><img src="/./img/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A7%92%E6%9D%80%E4%BC%98%E5%8C%96%E6%93%8D%E4%BD%9C/image-20220405234320336.png" alt="image-20220405234320336"></p>
+</li>
+<li><p>RedisConfig配置</p>
+</li>
+<li><p><img src="/./img/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A7%92%E6%9D%80%E4%BC%98%E5%8C%96%E6%93%8D%E4%BD%9C/image-20220405234413655.png" alt="image-20220405234413655"></p>
+</li>
+<li><p>Controller里判断库存修改</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> RedsiScript&lt;Long&gt; script;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><img src="/./img/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A7%92%E6%9D%80%E4%BC%98%E5%8C%96%E6%93%8D%E4%BD%9C/image-20220405234718836.png" alt="image-20220405234718836"></p>
+</li>
+</ul>
+</li>
+<li><p>JSONUtil 或者Maven添加fastJson依赖</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.bank.seckill2022.utils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.core.JsonParseException;</span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.core.JsonProcessingException;</span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.databind.JavaType;</span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.databind.JsonMappingException;</span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.databind.ObjectMapper;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 功能描述:</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span>: Json工具类</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span>:</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> 来自于网络</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 2022/3/25 23:36</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JSONUtil</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> ObjectMapper objectMapper = <span class="keyword">new</span> ObjectMapper();</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 将对象转换成json字符串</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> obj</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">object2JsonStr</span><span class="params">(Object obj)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> objectMapper.writeValueAsString(obj);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (JsonProcessingException e) &#123;</span><br><span class="line">            <span class="comment">//打印异常信息</span></span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 将字符串转换为对象</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> &lt;T&gt; 泛型</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">T <span class="title">jsonStr2Object</span><span class="params">(String jsonStr, Class&lt;T&gt; clazz)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> objectMapper.readValue(jsonStr.getBytes(<span class="string">&quot;UTF-8&quot;</span>), clazz);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (JsonParseException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (JsonMappingException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 将json数据转换成pojo对象list</span></span><br><span class="line"><span class="comment">     * &lt;p&gt;Title: jsonToList&lt;/p&gt;</span></span><br><span class="line"><span class="comment">     * &lt;p&gt;Description: &lt;/p&gt;</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> jsonStr</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> beanType</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">List&lt;T&gt; <span class="title">jsonToList</span><span class="params">(String jsonStr, Class&lt;T&gt; beanType)</span> </span>&#123;</span><br><span class="line">        JavaType javaType =</span><br><span class="line">                objectMapper.getTypeFactory().constructParametricType(List.class, beanType);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            List&lt;T&gt; list = objectMapper.readValue(jsonStr, javaType);</span><br><span class="line">            <span class="keyword">return</span> list;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/银行秒杀系统学习笔记//" class="article-tag-list-link color1">银行秒杀系统学习笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2022/04/09/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A7%92%E6%9D%80%E4%BC%98%E5%8C%96%E6%93%8D%E4%BD%9C/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2022/04/09/RabbitMQModel/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">RabbitMQ交换机模式配置流程</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -228,8 +423,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

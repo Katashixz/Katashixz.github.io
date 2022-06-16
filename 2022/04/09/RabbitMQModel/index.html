@@ -6,15 +6,43 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives: 2021 | Katashixz的博客</title>
+  <title>RabbitMQ交换机模式配置流程 | Katashixz的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Katashixz的博客">
-<meta property="og:url" content="http://example.com/archives/2021/index.html">
+  <meta name="description" content="RabbitMQ交换机模式配置Fanout模式(广播模式) 简单理解  一个消息能被多个队列接受，多个队列接受的是同一个生产者的消息。转发消息最快，不处理路由键。   核心代码  Config里准备队列和交换机   Config里绑定交换机      配置发送和接收部分    配置Controller层       Direct模式 通过绑定交换件的方式让交换机指定转发到某个队列上    所有发送">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RabbitMQ交换机模式配置流程">
+<meta property="og:url" content="http://example.com/2022/04/09/RabbitMQModel/index.html">
 <meta property="og:site_name" content="Katashixz的博客">
+<meta property="og:description" content="RabbitMQ交换机模式配置Fanout模式(广播模式) 简单理解  一个消息能被多个队列接受，多个队列接受的是同一个生产者的消息。转发消息最快，不处理路由键。   核心代码  Config里准备队列和交换机   Config里绑定交换机      配置发送和接收部分    配置Controller层       Direct模式 通过绑定交换件的方式让交换机指定转发到某个队列上    所有发送">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2022/04/09/RabbitMQModel/img/RabbitMQ/ConfigDetail.png">
+<meta property="og:image" content="http://example.com/2022/04/09/RabbitMQModel/img/RabbitMQ/ConfigDetail2.png">
+<meta property="og:image" content="http://example.com/2022/04/09/RabbitMQModel/img/RabbitMQ/Fanout-MQSender.png">
+<meta property="og:image" content="http://example.com/2022/04/09/RabbitMQModel/img/RabbitMQ/Fanout-MQReceiver.png">
+<meta property="og:image" content="http://example.com/img/RabbitMQ/Fanout-Controller.png">
+<meta property="og:image" content="http://example.com/.%5Cimg%5CRabbitMQ%5CDirectModel.png">
+<meta property="og:image" content="http://example.com/2022/04/09/RabbitMQModel/img/RabbitMQ/Direct-Config1.png">
+<meta property="og:image" content="http://example.com/img/RabbitMQ/Direct-Config2.png">
+<meta property="og:image" content="http://example.com/img/RabbitMQ/Direct-MQSender.png">
+<meta property="og:image" content="http://example.com/img/RabbitMQ/Direct-MQReceiver.png">
+<meta property="og:image" content="http://example.com/img/RabbitMQ/Direct-Controller.png">
+<meta property="og:image" content="http://example.com/img/RabbitMQ/TopicModel.png">
+<meta property="og:image" content="http://example.com/img/RabbitMQ/Topic-Config.png">
+<meta property="og:image" content="http://example.com/img/RabbitMQ/Topic-Config2.png">
+<meta property="og:image" content="http://example.com/img/RabbitMQ/Topic-Sender.png">
+<meta property="og:image" content="http://example.com/img/RabbitMQ/Topic-Receiver.png">
+<meta property="og:image" content="http://example.com/img/RabbitMQ/Topic-Controller.png">
+<meta property="og:image" content="http://example.com/2022/04/09/RabbitMQModel/img/RabbitMQ/image-20220324195234861.png">
+<meta property="og:image" content="http://example.com/.%5Cimg%5CRabbitMQ%5Cimage-20220324195423020.png">
+<meta property="og:image" content="http://example.com/.%5Cimg%5CRabbitMQ%5Cimage-20220324195812419.png">
+<meta property="og:image" content="http://example.com/.%5Cimg%5CRabbitMQ%5Cimage-20220324200023450.png">
+<meta property="og:image" content="http://example.com/.%5Cimg%5CRabbitMQ%5Cimage-20220324200541823.png">
+<meta property="og:image" content="http://example.com/.%5Cimg%5CRabbitMQ%5Cimage-20220324200355768.png">
+<meta property="article:published_time" content="2022-04-09T09:58:22.000Z">
+<meta property="article:modified_time" content="2022-06-16T07:11:58.881Z">
 <meta property="article:author" content="Katashi">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/04/09/RabbitMQModel/img/RabbitMQ/ConfigDetail.png">
   
     <link rel="alternative" href="/atom.xml" title="Katashixz的博客" type="application/atom+xml">
   
@@ -136,76 +164,266 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-RabbitMQModel" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2021" class="archive-year">2021</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/08/17/%E5%85%B3%E4%BA%8E%E6%8A%A5%E9%94%99Process-terminated%E7%9A%84%E8%A7%A3%E5%86%B3/" class="archive-article-date">
-  	<time datetime="2021-08-17T07:39:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-17</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/08/17/%E5%85%B3%E4%BA%8E%E6%8A%A5%E9%94%99Process-terminated%E7%9A%84%E8%A7%A3%E5%86%B3/">关于报错Process terminated的解决</a>
+    <h1 class="article-title" itemprop="name">
+      RabbitMQ交换机模式配置流程
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/08/16/%E6%AD%A3%E5%BC%8F%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87/" class="archive-article-date">
-  	<time datetime="2021-08-16T05:24:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-16</time>
+        
+        <a href="/2022/04/09/RabbitMQModel/" class="archive-article-date">
+  	<time datetime="2022-04-09T09:58:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-04-09</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/08/16/%E6%AD%A3%E5%BC%8F%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87/">正式的第一篇</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="RabbitMQ交换机模式配置"><a href="#RabbitMQ交换机模式配置" class="headerlink" title="RabbitMQ交换机模式配置"></a>RabbitMQ交换机模式配置</h1><h2 id="Fanout模式-广播模式"><a href="#Fanout模式-广播模式" class="headerlink" title="Fanout模式(广播模式)"></a>Fanout模式(广播模式)</h2><ul>
+<li><p>简单理解</p>
+<ul>
+<li>一个消息能被多个队列接受，多个队列接受的是同一个生产者的消息。转发消息最快，不处理路由键。</li>
+</ul>
+</li>
+<li><p>核心代码</p>
+<ul>
+<li><p>Config里准备队列和交换机</p>
+<img src="./img/RabbitMQ/ConfigDetail.png" alt="config" style="zoom:50%;" />
+</li>
+<li><p>Config里绑定交换机</p>
+</li>
+<li><img src="./img/RabbitMQ/ConfigDetail2.png" alt="config2" style="zoom:50%;" />
 
-        <div class="article-info info-on-right">
-          
-          
 
+</li>
+<li><p>配置发送和接收部分</p>
+</li>
+<li><img src="./img/RabbitMQ/Fanout-MQSender.png" alt="FanoutSender" style="zoom:50%;" /></li>
+<li><img src="./img/RabbitMQ/Fanout-MQReceiver.png" alt="FanoutReceiver" style="zoom:50%;" /></li>
+<li><p>配置Controller层</p>
+</li>
+<li><p><img src="/./img/RabbitMQ/Fanout-Controller.png" alt="Fanout-Controller"></p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Direct模式"><a href="#Direct模式" class="headerlink" title="Direct模式"></a>Direct模式</h2><ul>
+<li>通过绑定交换件的方式让交换机指定转发到某个队列上</li>
+</ul>
+<p><img src="/.%5Cimg%5CRabbitMQ%5CDirectModel.png" alt="DirectModel"></p>
+<ul>
+<li>所有发送到Direct Exchange的消息被转发到RouteKey中指定的Queue</li>
+<li>注意：Direct模式可以使用RabbitMQ自带的Exchange：default Exchange,所以不需要将 Exchange进行任何绑定(binding)操作，消息传递时，RouteKey必须完全匹配才会被队列接收，否则该消息会被抛弃。 重点：routing key与队列queues 的key保持一致，即可以路由到对应的queue中。</li>
+<li>核心代码<ul>
+<li>Config配置类</li>
+<li><img src="./img/RabbitMQ/Direct-Config1.png" alt="Direct-Config1" style="zoom:100%;" /></li>
+<li><img src="/./img/RabbitMQ/Direct-Config2.png" alt="Direct-Config2"></li>
+<li>MQSender配置</li>
+<li><img src="/./img/RabbitMQ/Direct-MQSender.png" alt="MQSender"></li>
+<li>MQReceiver配置</li>
+<li><img src="/./img/RabbitMQ/Direct-MQReceiver.png" alt="MQRec"></li>
+<li>Controller配置，记得注入</li>
+<li><img src="/./img/RabbitMQ/Direct-Controller.png" alt="Direct-Controller"></li>
+<li><strong>路由键若匹配不到，默认情况会丢失</strong>，但是可以通过对应的配置让他重新发送或者转发到指定的交换机上</li>
+</ul>
+</li>
+</ul>
+<h2 id="Topic模式"><a href="#Topic模式" class="headerlink" title="Topic模式"></a>Topic模式</h2><ul>
+<li><p>简单理解</p>
+<ul>
+<li><p>带有通配符的Direct模式，可以进行类似于模糊匹配和精确匹配路由键。一个都匹配不到默认会丢弃消息。</p>
+</li>
+<li><p>**[ * ]**精确匹配</p>
+</li>
+<li><p>**[ # ]**模糊匹配，后面可以跟一个或者多个单词</p>
+</li>
+<li><p><img src="/./img/RabbitMQ/TopicModel.png" alt="TopicModel"></p>
+</li>
+<li><p>核心代码</p>
+<ul>
+<li><p>Config</p>
+</li>
+<li><p><img src="/./img/RabbitMQ/Topic-Config.png" alt="Topic-Config"></p>
+</li>
+<li><p><img src="/./img/RabbitMQ/Topic-Config2.png" alt="Topic-Config2"></p>
+</li>
+<li><p>Sender配置</p>
+</li>
+<li><p><img src="/./img/RabbitMQ/Topic-Sender.png" alt="Topic-Sender"></p>
+</li>
+<li><p>Receiver配置</p>
+</li>
+<li><p><img src="/./img/RabbitMQ/Topic-Receiver.png" alt="Topic-Receiver"></p>
+</li>
+<li><p>Controller配置</p>
+</li>
+<li><p><img src="/./img/RabbitMQ/Topic-Controller.png" alt="Topic-Controller"></p>
+</li>
+<li></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Header模式"><a href="#Header模式" class="headerlink" title="Header模式"></a>Header模式</h2><ul>
+<li><p>简单理解</p>
+<ul>
+<li><p>实际工作中并不常用，简单学习</p>
+</li>
+<li><p>并不依赖于路由键</p>
+</li>
+<li><p>用Map匹配机制，效率低</p>
+</li>
+</ul>
+</li>
+<li><p>核心代码</p>
+<ul>
+<li>Config</li>
+<li><img src=".\img\RabbitMQ\image-20220324195234861.png" alt="image-20220324195234861" style="zoom:50%;" /></li>
+<li><img src="/.%5Cimg%5CRabbitMQ%5Cimage-20220324195423020.png" alt="image-20220324195423020"></li>
+<li>MQSender</li>
+<li><img src="/.%5Cimg%5CRabbitMQ%5Cimage-20220324195812419.png" alt="image-20220324195812419"></li>
+<li>MQReceiver</li>
+<li><img src="/.%5Cimg%5CRabbitMQ%5Cimage-20220324200023450.png" alt="image-20220324200023450"></li>
+<li>Controller</li>
+<li><img src="/.%5Cimg%5CRabbitMQ%5Cimage-20220324200541823.png" alt="image-20220324200541823"></li>
+<li><img src="/.%5Cimg%5CRabbitMQ%5Cimage-20220324200355768.png" alt="image-20220324200355768"></li>
+</ul>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/银行秒杀系统学习笔记//" class="article-tag-list-link color1">银行秒杀系统学习笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2022/04/09/RabbitMQModel/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2022/04/09/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A7%92%E6%9D%80%E4%BC%98%E5%8C%96%E6%93%8D%E4%BD%9C/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          高并发秒杀优化操作介绍
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2022/04/09/%E4%BB%A4%E7%89%8C%E6%A1%B6%E9%99%90%E6%B5%81%E7%AE%97%E6%B3%95/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">令牌桶限流算法整理</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -228,8 +446,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
