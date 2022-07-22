@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>RabbitMQ交换机模式配置流程 | Katashixz的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="RabbitMQ交换机模式配置Fanout模式(广播模式) 简单理解  一个消息能被多个队列接受，多个队列接受的是同一个生产者的消息。转发消息最快，不处理路由键。   核心代码  Config里准备队列和交换机   Config里绑定交换机      配置发送和接收部分    配置Controller层       Direct模式 通过绑定交换件的方式让交换机指定转发到某个队列上    所有发送">
+  <meta name="description" content="RabbitMQ交换机模式配置Fanout模式(广播模式) 简单理解  一个消息能被多个队列接受，多个队列接受的是同一个生产者的消息。转发消息最快，不处理路由键。   核心代码  Config里准备队列和交换机  Config里绑定交换机   配置发送和接收部分    配置Controller层       Direct模式 通过绑定交换件的方式让交换机指定转发到某个队列上    所有发送到Dir">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RabbitMQ交换机模式配置流程">
 <meta property="og:url" content="http://example.com/2022/04/09/RabbitMQModel/index.html">
 <meta property="og:site_name" content="Katashixz的博客">
-<meta property="og:description" content="RabbitMQ交换机模式配置Fanout模式(广播模式) 简单理解  一个消息能被多个队列接受，多个队列接受的是同一个生产者的消息。转发消息最快，不处理路由键。   核心代码  Config里准备队列和交换机   Config里绑定交换机      配置发送和接收部分    配置Controller层       Direct模式 通过绑定交换件的方式让交换机指定转发到某个队列上    所有发送">
+<meta property="og:description" content="RabbitMQ交换机模式配置Fanout模式(广播模式) 简单理解  一个消息能被多个队列接受，多个队列接受的是同一个生产者的消息。转发消息最快，不处理路由键。   核心代码  Config里准备队列和交换机  Config里绑定交换机   配置发送和接收部分    配置Controller层       Direct模式 通过绑定交换件的方式让交换机指定转发到某个队列上    所有发送到Dir">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/2022/04/09/RabbitMQModel/img/RabbitMQ/ConfigDetail.png">
 <meta property="og:image" content="http://example.com/2022/04/09/RabbitMQModel/img/RabbitMQ/ConfigDetail2.png">
@@ -193,14 +193,10 @@
 <li><p>核心代码</p>
 <ul>
 <li><p>Config里准备队列和交换机</p>
-<img src="./img/RabbitMQ/ConfigDetail.png" alt="config" style="zoom:50%;" />
-</li>
+<img src="./img/RabbitMQ/ConfigDetail.png" alt="config" style="zoom:50%;" /></li>
 <li><p>Config里绑定交换机</p>
 </li>
-<li><img src="./img/RabbitMQ/ConfigDetail2.png" alt="config2" style="zoom:50%;" />
-
-
-</li>
+<li><img src="./img/RabbitMQ/ConfigDetail2.png" alt="config2" style="zoom:50%;" /></li>
 <li><p>配置发送和接收部分</p>
 </li>
 <li><img src="./img/RabbitMQ/Fanout-MQSender.png" alt="FanoutSender" style="zoom:50%;" /></li>
