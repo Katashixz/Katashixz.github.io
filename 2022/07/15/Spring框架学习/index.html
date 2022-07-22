@@ -1,0 +1,527 @@
+<!DOCTYPE html><html lang="zh_CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Spring框架知识点整理 | Katashixz的博客</title><meta name="author" content="Katashi"><meta name="copyright" content="Katashi"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="为了融入公司而学Spring…IOC 概念 控制反转IoC(Inversion of Control)是一个概念，是一种思想。 由Spring容器进行对象的创建和依赖注入，程序员在使用时直接取出使用。 和正转概念中，由程序员说了算不同。    项目搭建 Maven-&gt;quickstart  resources新建，修改专有属性,删掉启动文件  pom里maven.compiler.sourc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring框架知识点整理">
+<meta property="og:url" content="https://katashixz.github.io/2022/07/15/Spring%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Katashixz的博客">
+<meta property="og:description" content="为了融入公司而学Spring…IOC 概念 控制反转IoC(Inversion of Control)是一个概念，是一种思想。 由Spring容器进行对象的创建和依赖注入，程序员在使用时直接取出使用。 和正转概念中，由程序员说了算不同。    项目搭建 Maven-&gt;quickstart  resources新建，修改专有属性,删掉启动文件  pom里maven.compiler.sourc">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
+<meta property="article:published_time" content="2022-07-15T09:31:24.000Z">
+<meta property="article:modified_time" content="2022-07-22T09:43:20.159Z">
+<meta property="article:author" content="Katashi">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"><link rel="shortcut icon" href="/img/K.png"><link rel="canonical" href="https://katashixz.github.io/2022/07/15/Spring%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Spring框架知识点整理',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-07-22 17:43:20'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/pic.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">10</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Katashixz的博客</a></span><div id="menus"><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Spring框架知识点整理</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-07-15T09:31:24.000Z" title="发表于 2022-07-15 17:31:24">2022-07-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-07-22T09:43:20.159Z" title="更新于 2022-07-22 17:43:20">2022-07-22</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%87%AA%E4%B8%BB%E5%AD%A6%E4%B9%A0/">自主学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Spring框架知识点整理"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="为了融入公司而学Spring…"><a href="#为了融入公司而学Spring…" class="headerlink" title="为了融入公司而学Spring…"></a>为了融入公司而学Spring…</h1><h2 id="IOC"><a href="#IOC" class="headerlink" title="IOC"></a>IOC</h2><ol>
+<li>概念<ul>
+<li>控制反转IoC(Inversion of Control)是一个概念，是一种思想。</li>
+<li>由Spring容器进行对象的创建和依赖注入，程序员在使用时直接取出使用。</li>
+<li>和正转概念中，由程序员说了算不同。</li>
+</ul>
+</li>
+</ol>
+<h2 id="项目搭建"><a href="#项目搭建" class="headerlink" title="项目搭建"></a>项目搭建</h2><ol>
+<li><p>Maven-&gt;quickstart</p>
+</li>
+<li><p>resources新建，修改专有属性,删掉启动文件</p>
+</li>
+<li><p>pom里maven.compiler.source,maven.compiler.target改成1.8</p>
+</li>
+<li><p>添加spring依赖</p>
+ <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-context<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.2.5.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>build里删除 加上</p>
+ <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resources</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/main/java<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">includes</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">include</span>&gt;</span>**/*.xml<span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">include</span>&gt;</span>**/*.properties<span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">includes</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/main/resources<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">includes</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">include</span>&gt;</span>**/*.xml<span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">include</span>&gt;</span>**/*.properties<span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">includes</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>基于xml的IOC，使用spring容器创建对象并取出对象 </p>
+<ol>
+<li>创建学生对象实体Student</li>
+<li>在配置文件中创建对象 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;stu&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.study.pojo.Student&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li>取出对象 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ApplicationContext ac = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">&quot;applicationContext.xml&quot;</span>);</span><br><span class="line">Student stu = (Student) ac.getBean(<span class="string">&quot;stu&quot;</span>);</span><br></pre></td></tr></table></figure></li>
+<li>给创建的对象赋值<ol>
+<li>使用setter注入——必须提供无参的构造方法,必须提供setXXX()方法<ul>
+<li>简单类型注入，使用value属性  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;stu&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.study.pojo.Student&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;name&quot;</span> <span class="attr">value</span>=<span class="string">&quot;张三&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;age&quot;</span> <span class="attr">value</span>=<span class="string">&quot;12&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li>引用类型注入，使用ref属性  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--创建学校对象--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;school&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.study.pojo.school&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;name&quot;</span> <span class="attr">value</span>=<span class="string">&quot;清华大学&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;addres&quot;</span> <span class="attr">value</span>=<span class="string">&quot;海淀区&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--创建学生对象--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;stu&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.study.pojo.Student&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;name&quot;</span> <span class="attr">value</span>=<span class="string">&quot;张三&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;age&quot;</span> <span class="attr">value</span>=<span class="string">&quot;12&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;school&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;school&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>使用构造方法注入 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Student stu = <span class="keyword">new</span> Student(<span class="string">&quot;张三&quot;</span>,<span class="number">22</span>)</span><br></pre></td></tr></table></figure>
+<ol>
+<li>使用构造方法的参数名称进行注入值<ul>
+<li>pojo中没有无参构造，只有有参构造<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;school&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.study.pojo.school&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">name</span>=<span class="string">&quot;name&quot;</span> <span class="attr">value</span>=<span class="string">&quot;清华大学&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">name</span>=<span class="string">&quot;addres&quot;</span> <span class="attr">value</span>=<span class="string">&quot;海淀区&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li>构造方法的参数名称必须和pojo的名称<strong>一致</strong></li>
+</ul>
+</li>
+<li>使用构造方法参数的下标注入值<ul>
+<li>pojo中没有无参构造，只有有参构造<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--创建学生对象--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;stu&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.study.pojo.Student&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">index</span>=<span class="string">&quot;0&quot;</span> <span class="attr">value</span>=<span class="string">&quot;王五&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">index</span>=<span class="string">&quot;1&quot;</span> <span class="attr">value</span>=<span class="string">&quot;22&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">index</span>=<span class="string">&quot;2&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;school&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>使用默认的构造方法的参数顺序注入值<ul>
+<li>按照默认的顺序<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--创建学生对象--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;stu&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.study.pojo.Student&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">value</span>=<span class="string">&quot;王五&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">value</span>=<span class="string">&quot;22&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">ref</span>=<span class="string">&quot;school&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="基于注解的IOC"><a href="#基于注解的IOC" class="headerlink" title="基于注解的IOC"></a>基于注解的IOC</h2><ul>
+<li>也称为DI(Dependency Injection)，是IOC的具体实现的技术。</li>
+<li><strong>基于注解的IOC，必须要在applicationContext.yml里添加包扫描</strong>  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">&quot;所在位置&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<ol>
+<li>创建对象的注解<ul>
+<li>@Component<ul>
+<li>可以创建任意对象,创建的对象的默认名称是类名的<strong>驼峰命名法</strong>，也可以指定对象的名称@Component(“指定名称”)</li>
+</ul>
+</li>
+<li>@Controller<ul>
+<li>专门用来创建控制器的对象，这种对象可以接收用户的请求，可以返回处理结果给客户端</li>
+</ul>
+</li>
+<li>@Service<ul>
+<li>专门用来创建业务逻辑层的对象，负责向下访问数据访问层，处理完毕后的结果返回给界面层</li>
+</ul>
+</li>
+<li>@Repository<ul>
+<li>专门用来创建数据访问层的对象，负责数据库中的增删改查所有操作 </li>
+</ul>
+</li>
+</ul>
+</li>
+<li>依赖注入的注解<ul>
+<li>简单类型的注入<ul>
+<li>@Value<ul>
+<li>用来给简单类型注入值<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Value(&quot;清华大学&quot;)</span></span><br><span class="line"><span class="keyword">private</span> String name;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>引用类型的注入<ul>
+<li>@Autowired<ul>
+<li>使用类型注入值，从整个Bean工厂中搜索同源类型的对象进行注入。</li>
+<li><strong>注意</strong><ul>
+<li>在有父子类的情况下，使用按类型注入，就意味着有多个可注入的对象，此时按照名称进行二次筛选，选中与被注入对象相同名称的对象进行注入</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>@Autowired+@Qualifier<ul>
+<li>使用名称注入值，从整个Bean工厂中搜索相同名称的对象进行注入。</li>
+<li><strong>注意</strong><ul>
+<li>如果有父子类的情况下，直接按名称进行注入值 </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>为应用指定多个Spring配置文件<ol>
+<li>拆分配置文件的策略<ol>
+<li>按层拆<ul>
+<li>applicationContext_controller.xml</li>
+<li>applicationContext_service.xml</li>
+<li>applicationContext_mapper.xml</li>
+</ul>
+</li>
+<li>按功能拆<ul>
+<li>applicationContext_users.xml 里面有userController,userService,userMapper</li>
+</ul>
+</li>
+<li>拆完之后单独写一个配置文件整合<ul>
+<li>批量导入<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">import</span> <span class="attr">resource</span>=<span class="string">&quot;applicationContext_*.xml&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">import</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="面向切面编程AOP"><a href="#面向切面编程AOP" class="headerlink" title="面向切面编程AOP"></a>面向切面编程AOP</h2><ul>
+<li>AOP (Aspect Orient Programming)</li>
+<li>切面<ul>
+<li>公共的，通用的，重复的功能称为切面，面向切面编程就是将切面提取出来，单独开发，在需要调用的方法中通过动态代理的方式进行植入</li>
+</ul>
+</li>
+<li>常见术语<ol>
+<li>切面<ul>
+<li>就是那些重复的，公共的，通用的功能称为切面，例如：日志、事务、权限</li>
+</ul>
+</li>
+<li>连接点<ul>
+<li>就是目标方法，因为在目标方法中要实现目标方法的功能和切面功能</li>
+</ul>
+</li>
+<li>切入点<ul>
+<li>多个连接点构成切入点，切入点可以说一个目标方法，可以使一个类中的所有方法， 可以是某个包下所有类中的方法切面在切入点切入</li>
+</ul>
+</li>
+<li>目标对象<ul>
+<li>操作谁，谁就是目标对象</li>
+</ul>
+</li>
+<li>通知<ul>
+<li>来指定切入的时机，是在目标方法执行前还是执行后还是出错时，还是环绕目标方法切入切面功能</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>AspectJ框架<ul>
+<li>优秀的面向切面的框架</li>
+<li>常见通知类型<ol>
+<li>前置通知@Before</li>
+<li>后置通知@AfterReturning</li>
+<li>环绕通知@Around</li>
+<li>最终通知@After</li>
+<li>定义切入点@PointCut</li>
+</ol>
+</li>
+<li>切入点表达式<ul>
+<li>execution(访问权限 方法返回值 方法声明(参数) 异常类型)</li>
+<li>简化 -&gt; execution(访问权限 方法声明(参数))</li>
+<li>用到的符号<ul>
+<li>* 代码任意个任意的字符(通配符)</li>
+<li>.. 如果出现在方法的参数中就代表任意参数，出现在路径中则代表本路径及其所有的子路径</li>
+</ul>
+</li>
+<li>示例<ul>
+<li>execution(public * *(..)) 任意的公共方法</li>
+<li>execution(* set*(..)) 任何一个以set开始的方法</li>
+<li>execution(* com.xyz.service.impl.<em>.</em>(..)) 这个包下的任意类中的任意方法</li>
+<li>execution(* com.xyz.service..<em>.</em>(..)) 这个包及其子包下的任意类中的任意方法 com.xyz.service.a com.xyz.service.b</li>
+<li>execution(* <em>..service.</em>.*(..)) service之前可以有任意的子包</li>
+<li>execution(* <em>.service.</em>.*(..)) service之前只有一个包</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>前置通知@Before使用<ul>
+<li>实现步骤<ol>
+<li>创建业务接口</li>
+<li>创建业务实现</li>
+<li>创建切面类，实现切面方法</li>
+<li>在applicationContext.xml文件中进行切面绑定</li>
+</ol>
+</li>
+<li>前置通知切面方法的规范<ol>
+<li>访问权限是public</li>
+<li>方法的返回值是void</li>
+<li>方法名称自定义</li>
+<li>方法没有参数，如果有也只能是JoinPoint类型</li>
+<li>必须使用@Before来注解声明切入时机和切入点<ul>
+<li>参数value 指定切入点表达式</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>AspectJ框架切换JDK动态代理和CGLib动态代理  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--默认是JDK动态代理，取出时必须使用接口类型--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">aop:aspectj-autoproxy</span>&gt;</span><span class="tag">&lt;/<span class="name">aop:aspectj-autoproxy</span>&gt;</span> </span><br><span class="line"><span class="comment">&lt;!--设置为CGLib子类代理--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">aop:aspectj-autoproxy</span> <span class="attr">proxy-target-class</span>=<span class="string">&quot;true&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">aop:aspectj-autoproxy</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>记住使用接口来接永远不会出错</li>
+</ul>
+</li>
+<li>后置通知@AfterReturning <ul>
+<li>后置通知方法的规范<ol>
+<li>访问权限是public</li>
+<li>方法没有返回值</li>
+<li>方法名称自定义</li>
+<li>方法有参数(也可以没有参数，如果目标方法没有返回值，则可以写无参的方法。这个切面方法的参数就是目标方法的返回值)</li>
+<li>使用@AtterReturn来表明是后置通知<ul>
+<li>参数value指定切入点表达式，returning 指定目标方法的返回值名称，则名必须与切面方法的参数名称一致</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><strong>重要</strong><ul>
+<li>如果目标方法的返回值是8种基本类型或String类型，则不可在后置通知中改变</li>
+<li>如果是引用类型，则可以改变</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>环绕通知@Around<ul>
+<li>他是通过拦截目标方法的方式，在目标方法前后增强功能的通知，是功能最强大的通知，一般事务使用此通知，它可以轻易改变目标方法的返回值。</li>
+<li>环绕通知方法的规范<ol>
+<li>访问权限是public</li>
+<li>切面方法有返回值，此返回值就是目标方法的返回值</li>
+<li>方法名称自定义</li>
+<li>方法有参数，此参数就是目标方法</li>
+<li>回避异常</li>
+<li>使用@Around声明是环绕通知<ul>
+<li>参数value指定切入点表达式</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>代码实现，ProceedingJoinPoint用于接收方法<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Around(value = &quot;execution(* com.study.s03.*.*(..))&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">myAround</span><span class="params">(ProceedingJoinPoint pjp)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;前切功能实现........&quot;</span>);</span><br><span class="line">    Object object = pjp.proceed(pjp.getArgs());</span><br><span class="line">    System.out.println(<span class="string">&quot;后切功能实现........&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> object.toString().toUpperCase();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>最终通知@After<ul>
+<li>无论目标方法是否正常执行，最终通知的代码都会被执行</li>
+<li>最终通知方法的规范<ol>
+<li>访问权限是public</li>
+<li>方法没有返回值</li>
+<li>方法名称自定义</li>
+<li>方法没有参数，如果有也只能是JoinPoint类型</li>
+<li>使用@After注解表明是最终通知<ul>
+<li>参数value指定切入点表达式</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>@Pointcut 定义切入点别名<ul>
+<li>当较多的通知增强方法使用相同的切入点表达式(execution)时，编写维护较为麻烦。所以提供了这个注解，相当于封装一下。</li>
+</ul>
+</li>
+</ul>
+<h2 id="事务相关知识"><a href="#事务相关知识" class="headerlink" title="事务相关知识"></a>事务相关知识</h2><ul>
+<li><p>查看源码</p>
+<ul>
+<li>SM整合步骤<ul>
+<li><img src="/../image/%E8%87%AA%E4%B8%BB%E5%AD%A6%E4%B9%A0/SM%E6%95%B4%E5%90%88%E6%AD%A5%E9%AA%A4.png"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>基于注解的事务添加步骤</p>
+<ol>
+<li>在applicationContext_service.xml中添加事务管理器<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--1.添加事务管理器--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;transactionManager&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--事务必须关联数据库处理，所以要配置数据源--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;dataSource&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;dataSource&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li>在applicationContext_service.xml中添加事务的注解驱动<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--2.添加事务的注解驱动--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">tx:annotation-driven</span> <span class="attr">transaction-manager</span>=<span class="string">&quot;transactionManager&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">tx:annotation-driven</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li>在业务逻辑的实现类上添加注解@Transactional(propagation = Propagation.REQUIRED)，REQUIRED表示增删改操作时必须添加的事务传播特性</li>
+</ol>
+</li>
+<li><p>Spring的两种事务处理方式</p>
+<ol>
+<li>注解式的事务(如上)<ul>
+<li>弊端<ul>
+<li>若一个类里有五六十个方法，并且增删改查都有，只能在方法上添加注解，会累死人</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>声明式事务(必须掌握)<ul>
+<li>在配置文件中添加一次，整个项目遵循事务的设定</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>面试易考<strong>Spring中事务的五大隔离级别</strong></p>
+<ol>
+<li>未提交读(Read Uncommitted)：允许脏读，也就是可能读取到其他会话中未提交事务修改的数据</li>
+<li>提交读(Read Committed)：只能读取到已经提交的数据。Oracle等多数数据库默认都是该级别(不重复读)</li>
+<li>可重复读(Repeated Read)：可重复读。在同一个事务内的查询都是事务开始时刻一致的，InmoDB默认级别。在SQL标准中，该隔离级别消除了不可重复读，但是还存在幻象读，但是innoDB解决了幻读</li>
+<li>串行读(Serializable)：完全串行化的读，每次读都需要获得表级共享锁，读写相互都会阻塞</li>
+<li>使用数据库默认的隔离级别isolation=Isolation.DEFAULT<ul>
+<li>MySQL: mysql默认的事务处理级别是’REPEATABLE-READ’,也就是可重复读</li>
+<li>Oracle:oracle 数据库支持READ,COMMITTED和SERIALIZABLE这两种事务隔离级别。</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>事务管理器用来生成相应技术的连接+执行语句的对象</p>
+<ul>
+<li>如果使用MyBatis，必须使用DataSourceTransactionManager类完成处理 </li>
+</ul>
+</li>
+<li><p>事物的传播特性解析</p>
+<ul>
+<li>特性<ol>
+<li>PROPAGATION_REQUIRED<ul>
+<li>必备包含事务(增删改必用)</li>
+</ul>
+</li>
+<li>PROPAGATION_REQUIRES_NEW<ul>
+<li>自己新开事务，不管之前是否有事务</li>
+</ul>
+</li>
+<li>PROPAGATION_SUPPORTS<ul>
+<li>支持事务，如果加入的方法有事务，则支持，如果没有，不单开事务</li>
+</ul>
+</li>
+<li>PROPAGATION_NERVER<ul>
+<li>不能运行在事务中，如果包在事务中，抛异常</li>
+</ul>
+</li>
+<li>PROPAGATION_NOT_SUPPORTED<ul>
+<li>不支持事务，运行在非事务环境。如果包在事务中会暂时挂起事务</li>
+</ul>
+</li>
+<li>PROPAGATION_MANDATORY<ul>
+<li>必须包在事务中，没有事务则抛异常</li>
+</ul>
+</li>
+<li>PROPAGATION_NESTED<ul>
+<li>嵌套事务</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>情况为UsersServiceImpl中insert业务嵌套Accounts中的insert业务，Accounts中的insert里有1/0的错误抛出。<ul>
+<li><img src="/../image/%E8%87%AA%E4%B8%BB%E5%AD%A6%E4%B9%A0/Spring%E4%BA%8B%E5%8A%A1%E7%9A%84%E4%BC%A0%E6%92%AD%E7%89%B9%E6%80%A7.png"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>声明式事务(开发常用)</p>
+<ul>
+<li><p>步骤</p>
+<ol>
+<li>添加配置文件<ol>
+<li>导入applicationContext_mapper.xml <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">import</span> <span class="attr">resource</span>=<span class="string">&quot;applicationContext_mapper.xml&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">import</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li>添加包扫描 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">&quot;com.study.service.impl&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">context:component-scan</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li>添加事务管理器 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;transactionManager&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;dataSource&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;dataSource&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li>配置事务切面 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">tx:advice</span> <span class="attr">id</span>=<span class="string">&quot;myadvice&quot;</span> <span class="attr">transaction-manager</span>=<span class="string">&quot;transactionManager&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tx:attributes</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">&quot;*select*&quot;</span> <span class="attr">read-only</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">&quot;*find*&quot;</span> <span class="attr">read-only</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">&quot;*search*&quot;</span> <span class="attr">read-only</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">&quot;*get*&quot;</span> <span class="attr">read-only</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">&quot;*insert*&quot;</span> <span class="attr">propagation</span>=<span class="string">&quot;REQUIRED&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">&quot;*add*&quot;</span> <span class="attr">propagation</span>=<span class="string">&quot;REQUIRED&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">&quot;*save*&quot;</span> <span class="attr">propagation</span>=<span class="string">&quot;REQUIRED&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">&quot;*set*&quot;</span> <span class="attr">propagation</span>=<span class="string">&quot;REQUIRED&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">&quot;*update*&quot;</span> <span class="attr">propagation</span>=<span class="string">&quot;change&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">&quot;*change*&quot;</span> <span class="attr">propagation</span>=<span class="string">&quot;REQUIRED&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">&quot;*modify*&quot;</span> <span class="attr">propagation</span>=<span class="string">&quot;REQUIRED&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">&quot;*delete*&quot;</span> <span class="attr">propagation</span>=<span class="string">&quot;REQUIRED&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">&quot;*remove*&quot;</span> <span class="attr">propagation</span>=<span class="string">&quot;REQUIRED&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">&quot;*drop*&quot;</span> <span class="attr">propagation</span>=<span class="string">&quot;REQUIRED&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">&quot;*clear*&quot;</span> <span class="attr">propagation</span>=<span class="string">&quot;REQUIRED&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">&quot;*&quot;</span> <span class="attr">propagation</span>=<span class="string">&quot;SUPPORTS&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tx:attributes</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">tx:advice</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li>绑定切面和切入点 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">aop:config</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aop:pointcut</span> <span class="attr">id</span>=<span class="string">&quot;mycut&quot;</span> <span class="attr">expression</span>=<span class="string">&quot;execution(* com.study.service.impl.*.*(..))&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">aop:pointcut</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aop:advisor</span> <span class="attr">advice-ref</span>=<span class="string">&quot;myadvice&quot;</span> <span class="attr">pointcut-ref</span>&quot;<span class="attr">mycut</span>&quot;&gt;</span><span class="tag">&lt;/<span class="name">aop:advisor</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">aop:config</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>要求项目中的方法命名有规范</p>
+<ol>
+<li>完成增加操作包含 add save insert set</li>
+<li>更新操作包含 update change modify</li>
+<li>删除操作包含 delete drop remove clear</li>
+<li>查询操作包含 select find search get</li>
+</ol>
+</li>
+<li><p>如果有特殊需求，可以搭配使用注解式事务，设置优先级</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="完结撒花"><a href="#完结撒花" class="headerlink" title="完结撒花"></a>完结撒花</h1></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://katashixz.github.io/">Katashi</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://katashixz.github.io/2022/07/15/Spring%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0/">https://katashixz.github.io/2022/07/15/Spring框架学习/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://katashixz.github.io" target="_blank">Katashixz的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/07/22/JVM%E5%AD%A6%E4%B9%A0/"><img class="prev-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">JVM知识点整理</div></div></a></div><div class="next-post pull-right"><a href="/2022/07/06/%E6%80%BB%E6%96%B9%E6%A1%88%E6%95%B4%E7%90%86/"><img class="next-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">三湘银行秒杀系统优化方案整理</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/pic.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Katashi</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">10</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Katashixz"><i class="fab fa-github"></i><span>关注</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Katashixz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:hyihao2001@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">有问题欢迎指正！请通过邮箱联系我！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%BA%E4%BA%86%E8%9E%8D%E5%85%A5%E5%85%AC%E5%8F%B8%E8%80%8C%E5%AD%A6Spring%E2%80%A6"><span class="toc-number">1.</span> <span class="toc-text">为了融入公司而学Spring…</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#IOC"><span class="toc-number">1.1.</span> <span class="toc-text">IOC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA"><span class="toc-number">1.2.</span> <span class="toc-text">项目搭建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E6%B3%A8%E8%A7%A3%E7%9A%84IOC"><span class="toc-number">1.3.</span> <span class="toc-text">基于注解的IOC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%88%87%E9%9D%A2%E7%BC%96%E7%A8%8BAOP"><span class="toc-number">1.4.</span> <span class="toc-text">面向切面编程AOP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86"><span class="toc-number">1.5.</span> <span class="toc-text">事务相关知识</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%8C%E7%BB%93%E6%92%92%E8%8A%B1"><span class="toc-number">2.</span> <span class="toc-text">完结撒花</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2022/07/22/JVM%E5%AD%A6%E4%B9%A0/" title="JVM知识点整理">JVM知识点整理</a><time datetime="2022-07-22T09:32:24.000Z" title="发表于 2022-07-22 17:32:24">2022-07-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2022/07/15/Spring%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0/" title="Spring框架知识点整理">Spring框架知识点整理</a><time datetime="2022-07-15T09:31:24.000Z" title="发表于 2022-07-15 17:31:24">2022-07-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2022/07/06/%E6%80%BB%E6%96%B9%E6%A1%88%E6%95%B4%E7%90%86/" title="三湘银行秒杀系统优化方案整理">三湘银行秒杀系统优化方案整理</a><time datetime="2022-07-06T01:16:24.000Z" title="发表于 2022-07-06 09:16:24">2022-07-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2022/07/02/%E8%B6%85%E6%97%B6%E8%AE%A2%E5%8D%95%E5%A4%84%E7%90%86/" title="订单超时处理">订单超时处理</a><time datetime="2022-07-02T04:11:24.000Z" title="发表于 2022-07-02 12:11:24">2022-07-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2022/04/09/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A7%92%E6%9D%80%E4%BC%98%E5%8C%96%E6%93%8D%E4%BD%9C/" title="高并发秒杀优化操作介绍">高并发秒杀优化操作介绍</a><time datetime="2022-04-09T12:10:44.000Z" title="发表于 2022-04-09 20:10:44">2022-04-09</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By Katashi</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
