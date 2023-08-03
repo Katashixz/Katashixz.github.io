@@ -1,0 +1,285 @@
+---
+title: 【Java知识点】关于集合的一些面试问答
+date: 2023-03-02 17:17:12
+categories: 自主学习
+cover: ../image/Collection-Map/cover.jpg
+---
+
+本篇文章内容参考[JavaGuide](https://javaguide.cn/)，自己整理一遍加深印象。
+
+# 集合概述
+
+Java集合，也叫做容器。主要是由Collection(存放单一元素)、Map(存放键值对)两大接口派生而来。对于Collection接口，有三个主要的子接口：**List**、**Set**、**Queue**
+
+# 常见问答
+
+## 说说List，Set，Queue，Map四者的区别
+
+- List(对付顺序的好帮手)
+  - 存储的元素是有序的、可重复的。
+- Set(注重独一无二)
+  - 存储的元素是无序的、不可重复的。
+- Queue(排队，注重规则排序)
+  - 按特定的规则来确定先后顺序，存储的元素是无序的、可重复的。
+- Map(Key-Value，key独一无二，一一对应)
+  - key是无序的、不可重复的。
+  - value是无序的、可重复的。
+
+## 常用的集合类有哪些
+
+- List
+  - ArrayList
+    - 底层是Object[]数组
+  - Vector
+    - 底层是Object[]数组，线程安全，效率低，使用较少
+  - LinkedList
+    - 底层是双向链表
+- Set
+  - HashSet
+    - 无序，底层是HashMap，放到HashSet集合中的元素等同于放到HashMap集合Key部分。 
+  - TreeSet
+    - 有序，底层是TreeMap，放到TreeSet集合中的元素等同于放到了TreeMap集合key部分 
+  - LinkedHashSet 
+    - HashSet的子类，通过LinkedHashMap实现 
+- Map  
+  - HashMap
+    - JDK1.8之前由数组+链表组成，数组是主体，链表为了解决哈希冲突而存在。JDK1.8以后冲突解决方式有了较大变化：当链表长度大于阈值(默认为8)时，将链表转化为红黑树，以减少搜索时间。若当前数组长度小于64，会先进行数组扩容，而不是转化为红黑树。
+  - LinkedHashMap
+    - 继承自HashMap，底层仍然是基于拉链式散列结构的，即由数组和链表(或红黑树)组成。
+  - HashTable 
+    - 底层是数组+链表，数组是主体，线程安全，效率低，使用少 
+  - Properties
+    - 线程安全，key-value方式存储，只能存String 
+  - TreeMap
+    - 底层是自平衡的排序二叉树，TreeMap集合的key可以按照大小顺序排序 
+- Queue
+  - PriorityQueue
+    - 底层是Object[]数组，来实现二叉堆。
+  - ArrayQueue
+    - 底层是Object[]数组+双指针
+
+## 如何选用集合
+
+根据特点来使用。
+- 需要键值对 -> Map接口下的集合
+  - 需要排序 -> TreeMap
+  - 不需要排序 -> HashMap
+  - 需要线程安全 -> ConcurrentHashMap
+- 只需要存放 -> Collection接口下的集合
+
+# 关于Collection的问题
+
+## ArrayList和Vector的区别
+
+- ArrayList
+  - List的主要实现类，底层使用Object[]存储
+  - 适用于频繁的查找工作
+  - 线程不安全
+- Vector
+  - 是List的古老实现类，底层使用Object[]存储
+  - 线程安全
+
+## ArrayList和LinkedList区别
+
+- ArrayList
+  - 线程不安全
+  - 底层数据结构是Object[]数组
+  - 末位追加元素为O(1)，指定位置插入和删除为O(n-i)
+  - 支持快速随机访问(通过下标访问)，实现了RandomAccess接口。
+  - 结尾会预留一定空间
+- LinkedList
+  - 线程不安全
+  - 底层数据结构是双向链表
+  - 头尾插入和删除元素不受元素位置影响，指定位置插入删除需要O(n)时间
+  - 不支持快速随机访问
+  - 单个元素空间花费大(要存后继和直接前驱)
+
+## ArrayList的扩容机制
+
+最好浏览一遍源码来增强记忆。
+
+从初始化讲起，如果直接调用无参构造，实际上初始化赋值的是一个空数组。真正对数组进行添加元素操作时，才会分配容量。以下代码来源于[JavaGuide](https://javaguide.cn/java/collection/arraylist-source-code.html#%E4%B8%80%E6%AD%A5%E4%B8%80%E6%AD%A5%E5%88%86%E6%9E%90-arraylist-%E6%89%A9%E5%AE%B9%E6%9C%BA%E5%88%B6)
+
+```java
+    /**
+     * 源码默认初始容量大小
+     */
+    private static final int DEFAULT_CAPACITY = 10;
+```
+
+继续添加元素，直到添加到第11个元素，会进入到一个名为grow()的方法进行扩容。
+
+```java
+        /**
+     * 要分配的最大数组大小
+     */
+    private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
+
+    /**
+     * ArrayList扩容的核心方法。
+     */
+    private void grow(int minCapacity) {
+        // oldCapacity为旧容量，newCapacity为新容量
+        int oldCapacity = elementData.length;
+        //将oldCapacity 右移一位，其效果相当于oldCapacity /2，
+        //我们知道位运算的速度远远快于整除运算，整句运算式的结果就是将新容量更新为旧容量的1.5倍，
+        int newCapacity = oldCapacity + (oldCapacity >> 1);
+        //然后检查新容量是否大于最小需要容量，若还是小于最小需要容量，那么就把最小需要容量当作数组的新容量，
+        if (newCapacity - minCapacity < 0)
+            newCapacity = minCapacity;
+       // 如果新容量大于 MAX_ARRAY_SIZE,进入(执行) `hugeCapacity()` 方法来比较 minCapacity 和 MAX_ARRAY_SIZE，
+       //如果minCapacity大于最大容量，则新容量则为`Integer.MAX_VALUE`，否则，新容量大小则为 MAX_ARRAY_SIZE 即为 `Integer.MAX_VALUE - 8`。
+        if (newCapacity - MAX_ARRAY_SIZE > 0)
+            newCapacity = hugeCapacity(minCapacity);
+        // minCapacity is usually close to size, so this is a win:
+        elementData = Arrays.copyOf(elementData, newCapacity);
+    }
+```
+扩容是通过**Arrays.copyOf()**函数进行数组复制来实现的。每次会扩容到原来的1.5倍**左右**(newCapacity = oldCapacity + (oldCapacity >> 1))。如果新容量大于MAX_ARRAY_SIZE，则会进入hugeCapacity()方法来比较minCapacity和MAX_ARRAY_SIZE。如果minCapacity大于最大容量，则新容量为Integer.MAX_VALUE，否则为Integer.MAX_VALUE - 8。
+
+## Comparable和Comparator的区别
+
+- Comparable接口
+  - 出自java.lang包
+  - 有一个compareTo(Object obj)方法来排序
+  - 常写在对象内
+- Comparator接口
+  - 出自java.util包
+  - 有一个compare(Object obj1, Object obj2)方法用来排序
+
+## HashSet、LinkedHashSet、TreeSet的异同
+
+- 同
+  - 都是Set接口的实现类
+  - 保证元素唯一
+  - 线程不安全
+- 异
+  - 主要区别在于底层数据结构不同。
+    - HashSet底层是哈希表(红黑树或数组+链表)
+    - LinkedHashSet底层是链表和哈希表，元素插入取出顺序满足FIFO。
+    - TreeSet底层是红黑树，元素是有序的，排序方式可以自定义。
+
+## ArrayDeque和LinkedList的区别
+
+- ArrayDeque
+  - 基于可变长的数组和双指针
+  - 不支持存储NULL
+  - 插入时可能存在扩容过程
+- LinkedList
+  - 基于链表
+  - 支持存储NULL
+  - 每次插入数据要申请新的堆空间，总的来说性能不如ArrayDeque
+
+## PriorityQueue相关知识
+
+与Queue的区别在于是优先级最高的元素先出队。
+- 特点
+  - 用二叉堆来实现，底层是用可变长的数组来存储数据
+  - 通过堆的上浮和下沉实现了O(log n)的时间复杂度内插入元素和删除堆顶元素
+  - 线程不安全
+  - 不支持存储NULL和不可比较的对象
+  - 默认是小顶堆，但是可以自定义元素优先级。
+
+# 关于Map的问题
+
+## HashMap和HashTable的区别
+
+- HashMap
+  - 线程不安全，ConcurrentHashMap才是线程安全的
+  - 效率比HashTable高
+  - 支持存储NULL的key和value
+  - 创建时默认大小为16每次扩充变为2n，若给定容量值m会初始化为2^m
+  - 底层为数组+链表，链表长度大于阈值会转为红黑树，转化前会判断数组长度，如果小于64会先进行数组扩容以减少搜索时间。
+- HashTable
+  - 线程安全，方法都进过Synchronized修饰
+  - 效率低，基本被淘汰
+  - 不支持存储NULL
+  - 创建时默认大小为11，每次扩容为2n+1，给定容量值则大小为容量值
+
+## HashMap和HashSet的区别
+
+HashSet底层基于HashMap实现，只有个别方法是自己实现，其他都是直接调用HashMap的方法。
+
+就是Map和Set的区别。以及HashMap用键来计算hashcode，HashSet用成员对象来计算hashcode，用equals()判断对象的相等性。
+
+## HashMap和TreeMap的区别
+
+- TreeMap
+  - 实现了NavigableMap接口，具有对集合内元素的搜索能力
+  - 实现了SortedMap接口，让TreeMap具有对集合中元素根据键排序的能力，默认按key升序，也可指定排序的比较器
+
+## HashSet如何查重
+
+- 从代码上看
+  - 在JDK1.8中，HashSet的add()方法只是简单的调用了HashMap的put()方法，并且判断了一下返回值以确保是否有重复元素。也就是说无论HashSet中是否存在某元素都会直接插入。
+- 从底层上看(以下内容摘自《Head First Java》第二版)
+  > 当你把对象加入HashSet时，HashSet会先计算对象的hashcode值来判断对象加入的位置，同时也会与其他加入的对象的hashcode值作比较，如果没有相符的hashcode，HashSet会假设对象没有重复出现。但是如果发现有相同hashcode值的对象，这时会调用equals()方法来检查hashcode相等的对象是否真的相同。如果两者相同，HashSet就不会让加入操作成功。
+
+
+## HashMap的底层实现
+
+- JDK1.8之前
+  - 底层实现原理
+    - **数组和链表**结合在一起使用也就是**链表散列**。HashMap通过key的`hashcode`经过扰动函数处理过后得到hash值，然后通过`(n-1) & hash`(n为数组长度)判断当前元素存放的位置，如果当前位置存在元素，就判断该元素与要存入的元素的hash值和key是否相同，如果相同直接覆盖，不相同通过**拉链法**解决。
+  - 拉链法
+    - 链表和数组相结合(链表数组)，数组中的每一个格就是一个链表，遇到哈希冲突，将冲突的值加入到链表中即可。
+- JDK1.8之后
+  - 底层实现原理
+    - 变化主要在解决哈希冲突上，当链表长度大于阈值(默认为8)时，将链表转化为红黑树，以减少搜素时间。
+  - 注意事项
+    - 转化为红黑树之前会先判断数组长度，如果小于64，那么会选择先进行数组扩容，而不是转化为红黑树。
+
+## HashMap的长度为什么是2的幂次方
+
+要让HashMap存储高效，就要把数据分配均匀，减少碰撞。Hash的范围值是-2147483648 到 2147483647，大概40亿映射空间，内存放不下。所以这个散列值就要先对数组的长度取模才能用，得到的余数才是对应数组下标。计算方法是`(n-1) & hash`。&运算代替取余提高效率。
+
+## HashMap的常见遍历方式
+
+详细代码流程参考文章[HashMap 的 7 种遍历方式与性能分析！](https://mp.weixin.qq.com/s/zQBN3UvJDhRTKP6SzcZFKw)
+
+HashMap遍历从大的方向来说主要分为4类，每种类型有自己的实现方式。
+
+1. 借助迭代器(Iterator)遍历
+   1. 使用Iterator中EntrySet的方式进行遍历
+   2. 使用Iterator中KeySet的方式进行遍历
+2. For Each遍历
+   1. 使用For Each EntrySet
+   2. 使用For Each KeySet
+3. Lambda表达式遍历(JDK1.8+)
+4. Streams API遍历(JDK1.8+)
+   1. 使用Streams API单线程的方式进行遍历
+   2. 使用Streams API多线程的方式进行遍历
+
+## ConcurrentHashMap和Hashtable的区别
+
+区别主要体现在实现线程安全的方式不同
+
+- 底层数据结构
+  - ConcurrentHashMap
+    - JDK1.7
+      - **分段数组+链表**
+    - JDK1.8
+      - 和HashMap一样，数组+链表/红黑树
+  - HashTable
+    - 数组+链表
+    - 数组是主体，链表为了解决哈希冲突
+- 实现线程安全的方式
+  - ConcurrentHashMap
+    - JDK1.7
+      - 对整个桶数组进行了分割分段(Segment，分段锁)，每一把锁只锁容器中一部分的数据，多线程访问容器里不同数据段的数据，就不会存在竞争，提高了并发的访问率。
+    - JDK1.8
+      - ConcurrentHashMap放弃了Segment，直接采用Node数组+链表+红黑树的数据结构，并发控制使用`synchronized`和CAS(Compare And Swap，比较并交换)来操作，整个过程看起来像优化过且线程安全的HashMap，
+  - HashTable
+    - 使用`synchronize`保存线程安全，效率非常低。所有线程使用同一把锁。
+
+## ConcurrentHashMap实现新老版本的不同
+
+- 线程安全实现方式
+  - 1.7采用`Segment`分段锁，继承自`ReentrantLock`。
+  - 1.8采用`Node + CAS + synchronized`保证线程安全，锁粒度更细，`synchronized`只锁定当前链表或红黑树的首节点
+- Hash碰撞解决方法
+  - 1.7采用拉链法
+  - 1.8采用拉链法结合红黑树(链表长度超过一定阈值会将链表转化为红黑树)
+- 并发度
+  - 1.7最多并发度是Segment的个数，默认为16
+  - 1.8最大并发度是Node数组的大小，并发度更大

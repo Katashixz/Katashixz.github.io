@@ -1,0 +1,111 @@
+# 基础知识
+## IO流简介
+IO，即(Input/Output)，也就是输入和输出。IO流在Java中分为输入流和输出流，根据数据的处理方式又分为**字节流**和**字符流**。
+- 为什么IO操作有字节流和字符流？
+  - 在不知道编码类型的情况下，字节流操作容易出现乱码。
+  - 字符流要通过Java虚拟机转换得到的，过程比较耗时。
+  - 音频文件、图片等媒体文件用字节流较好，文字用字符流较好。
+## 字节流
+### InputStream(字节输入流)
+java.io.InputStream抽象类是所有字节输入流的父类。
+- 作用
+  - 用于从源头(通常是文件)读取数据(字节信息)到内存中。
+#### FileInputStream
+- 作用
+  - 常用的字节输入流对象，可以指定文件路径，可以直接读取单字节数据，也可以读取至字节数组中。
+- 一般不直接单独使用，常与BufferedInputStream(字节缓冲输入流)搭配，如下面这段代码。
+```java
+// 新建一个 BufferedInputStream 对象
+BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream("inputFile.txt"));
+// 读取文件的内容并复制到 String 对象中
+String result = new String(bufferedInputStream.readAllBytes());
+System.out.println(result);
+```
+#### DataInputStream
+- 作用
+  - 用于读取指定类型数据，例如int、boolean等，不能单独使用，必须结合FileInputStream
+```java
+FileInputStream fileInputStream = new FileInputStream("inputFile.txt");
+//必须将fileInputStream作为构造参数才能使用
+DataInputStream dataInputStream = new DataInputStream(fileInputStream);
+//可以读取任意具体的类型数据
+dataInputStream.readBoolean();
+dataInputStream.readInt();
+dataInputStream.readUTF();
+```
+#### 还有ObjectInputStream(反序列化，读取对象)等..
+### OutputStream(字节输出流)
+java.io.OutputStream抽象类是所有字节输出流的父类。
+- 作用
+  - 用于将数据(字节信息)写入到目的地(通常是文件)
+#### FileOutputStream、DataOutputStream、ObjectOutputStream与Input差不多
+## 字符流
+### Reader(字符输入流)
+java.io.Reader抽象类是所有字符输入流的父类。常用的FileReader(读取字符文件)继承自InputStreamReader(字节流转换为字符流的桥梁)，InputStreamReader继承自Reader。
+- 作用
+  - 用于从源头(通常是文件)读取数据(字符信息)到内存中。
+### Writer(字符输出流)
+java.io.Writer抽象类是所有字节输出流的父类。常用的FileWriter(写入字符到文件)继承自OutputStreamWriter(字符流转换为字节李的桥梁)，继承自OutputStreamWriter继承自Writer。
+- 作用
+  - 常用于将数据(字符信息)写入到目的地(通常是文件)
+## 字节缓冲流
+- 是什么
+  - 采用装饰器模式增强了InputStream和OutputStream子类对象的功能。有BufferedInputStream和BufferedOutputStream
+  - 在调用write(int b)和read()这两个一次只读取一个字节的方法时，由于字节缓冲流内部有缓冲区，会将读取到的字节先存放在缓冲区。
+- 为什么
+  - 由于IO操作十分消耗性能，所以采用缓冲流将数据加载至缓冲区，一次性读取/写入多个字节从而避免频繁的IO操作，提高传输效率。缓冲区本质上是一个字节数组，大小默认为8192字节，可自定义。
+## 字符缓冲流
+BufferedReader (字符缓冲输入流)和 BufferedWriter(字符缓冲输出流)类似于BufferedInputStream(字节缓冲输入流)和BufferedOutputStream(字节缓冲输入流)。
+## 打印流
+- PrintStream(字节打印流)，是OutputStream的子类。
+- PrintWriter(字符打印流)，是Writer的子类
+- System.out实际上就是获取一个PrintStream对象，System.out.print就是调用PrintStream对象的write方法。
+## 随机访问流
+- 作用
+  - 支持跳转到文件任意位置进行读写的RandomAccessFile。在rw模式下若文件指针位置已有数据使用write方法会覆盖。
+  - 常用于实现大文件的**断点续传**
+- 模式
+  - r —— 只读模式
+  - rw —— 读写模式
+  - rws —— 相对于rw，rws 同步更新对“文件的内容”或“元数据”的修改到外部存储设备。
+  - rwd —— rwd 同步更新对“文件的内容”的修改到外部存储设备。
+- 常用方法
+  - seek(long pos) —— 设置文件指针偏移量，距离开头pos个字节。
+  - getFilePointer() —— 获取文件指针当前位置。
+# 设计模式
+## 装饰器模式
+装饰器模式(Decorator)可以在不改变原有对象的情况下拓展其功能。
+- 特点
+  - 通过**组合替代继承**来扩展原始类的功能，通过实现或者继承该类的抽象父类或者实现的接口，在一些继承关系比较复杂的场景更加实用，例如I/O场景。
+  - 必须有一个被装饰的对象(作为成员变量)
+  - 必须拥有与被装饰对象相同的接口(多态调用，扩展需要)
+  - 它可以给被装饰对象添加额外的功能
+  - 可以对原始类嵌套使用多个装饰器，装饰器类需要跟原始类继承相同的抽象类或者实现相同的接口
+    - 这段话看着很难理解，实际上就可以理解为辅助和ADC，都是英雄单位，辅助英雄通过各种技能来增强ADC的作用。
+## 适配器模式
+适配器(Adapter Pattern)模式主要用于接口互不兼容的类的协调工作，可以联想到日常使用的电源适配器，比如游戏机的欧版电源需要适配器才能在中国用。
+- 适配者(Adaptee)
+  - 定义
+    - 被适配的对象或者类
+- 适配器(Adapter)
+  - 定义
+    - 作用于适配者的对象或者类
+  - 分类
+    - 对象适配器
+      - 通过组合关系来实现
+    - 类适配器
+      - 通过继承关系来实现
+- 案例
+  - IO中的字符流就是基于适配器模式来做的(和字节流不同)
+  - 通过对象适配器，将字节流对象适配成一个字符流对象，这样我们可以直接通过字节流对象来读取或者写入字符数据
+  - InputStreamReader 和 OutputStreamWriter 就是两个适配器(Adapter)， 同时，它们两个也是字节流和字符流之间的桥梁。InputStreamReader 使用 **StreamDecoder(流解码器)**对字节进行解码，实现字节流到字符流的转换， OutputStreamWriter 使用**StreamEncoder(流编码器)**对字符进行编码，实现字符流到字节流的转换。
+- 与装饰器模式的区别
+  - 装饰器模式
+    - 更侧重于动态地增强原始类的功能，装饰器类需要跟原始类继承相同的抽象类或者实现相同的接口。
+  - 适配器模式
+    - 更侧重于让接口不兼容而不能交互的类可以一起工作。当我们调用适配器对应的方法时，适配器内部会调用适配者类或者和适配类相关的类的方法，这个过程透明的。类似于Type-C转USB的转接头，即插即用。
+    - 适配器和适配者不惜要继承相同的抽象类或者实现相同的接口。
+## 工厂模式
+工厂模式用于创建对象,NIO(Non-Blocking IO，非阻塞)中大量用到了工厂模式。
+## 观察者模式
+主打一个监听

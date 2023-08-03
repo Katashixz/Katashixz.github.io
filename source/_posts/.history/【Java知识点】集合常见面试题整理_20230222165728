@@ -1,0 +1,63 @@
+---
+title: 【Java知识点】关于集合的一些面试问答
+date: 2023-02-22 15:26:50
+categories: 自主学习
+cover: ../image/IO/IO.jpg
+---
+# 集合概述
+
+Java集合，也叫做容器。主要是由Collection(存放单一元素)、Map(存放键值对)两大接口派生而来。对于Collection接口，有三个主要的子接口：**List**、**Set**、**Queue**
+
+# 常见问答
+
+## 说说List，Set，Queue，Map四者的区别？
+- List(对付顺序的好帮手)
+  - 存储的元素是有序的、可重复的。
+- Set(注重独一无二)
+  - 存储的元素是无序的、不可重复的。
+- Queue(排队，注重规则排序)
+  - 按特定的规则来确定先后顺序，存储的元素是无序的、可重复的。
+- Map(Key-Value，key独一无二，一一对应)
+  - key是无序的、不可重复的。
+  - value是无序的、可重复的。
+
+## 常用的集合类有哪些
+
+- List
+  - ArrayList
+    - 底层是Object[]数组
+  - Vector
+    - 底层是Object[]数组，线程安全，效率低，使用较少
+  - LinkedList
+    - 底层是双向链表
+- Set
+  - HashSet
+    - 无序，底层是HashMap，放到HashSet集合中的元素等同于放到HashMap集合Key部分。 
+  - TreeSet
+    - 有序，底层是TreeMap，放到TreeSet集合中的元素等同于放到了TreeMap集合key部分 
+  - LinkedHashSet 
+    - HashSet的子类，通过LinkedHashMap实现 
+- Map  
+  - HashMap
+    - JDK1.8之前由数组+链表组成，数组是主体，链表为了解决哈希冲突而存在。JDK1.8以后冲突解决方式有了较大变化：当链表长度大于阈值(默认为8)时，将链表转化为红黑树，以减少搜索时间。若当前数组长度小于64，会先进行数组扩容，而不是转化为红黑树。
+  - LinkedHashMap
+    - 继承自HashMap，底层仍然是基于拉链式散列结构的，即由数组和链表(或红黑树)组成。
+  - HashTable 
+    - 底层是数组+链表，数组是主体，线程安全，效率低，使用少 
+  - Properties
+    - 线程安全，key-value方式存储，只能存String 
+  - TreeMap
+    - 底层是自平衡的排序二叉树，TreeMap集合的key可以按照大小顺序排序 
+- Queue
+  - PriorityQueue
+    - 底层是Object[]数组，来实现二叉堆。
+  - ArrayQueue
+    - 底层是Object[]数组+双指针
+
+## 如何选用集合？
+根据特点来使用。
+- 需要键值对 -> Map接口下的集合
+  - 需要排序 -> TreeMap
+  - 不需要排序 -> HashMap
+  - 需要线程安全 -> ConcurrentHashMap
+- 只需要存放 -> Collection接口下的集合
